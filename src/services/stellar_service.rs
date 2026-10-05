@@ -29,8 +29,7 @@ impl StellarService {
         }
     }
 
-    #[cfg(test)]
-    pub(crate) fn with_base_url(base_url: &str) -> Self {
+    pub fn with_base_url(base_url: &str) -> Self {
         Self {
             base_url: base_url.to_string(),
             client: reqwest::Client::new(),
