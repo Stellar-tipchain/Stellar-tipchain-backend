@@ -13,6 +13,7 @@ A REST API backend for a Stellar-based tip chain. Creators register with a usern
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
 - [Running the Server](#running-the-server)
+- [Running with Docker Compose](#running-with-docker-compose)
 - [API Reference](#api-reference)
 - [Database Migrations](#database-migrations)
 - [Project Structure](#project-structure)
@@ -137,6 +138,30 @@ cargo build --release
 ```
 
 The server applies any pending database migrations automatically on startup, then begins listening on `0.0.0.0:<PORT>`.
+
+---
+
+## Running with Docker Compose
+
+To run the complete stack (Rust API + PostgreSQL) locally with a single command:
+
+```bash
+# Build and start both API and database services
+docker compose up --build
+
+# Run in background (detached mode)
+docker compose up -d
+
+# Stop services (preserves database data via named volume)
+docker compose down
+
+# Stop services and remove persistent volume
+docker compose down -v
+```
+
+- **API Endpoint:** `http://localhost:8000`
+- **PostgreSQL Database:** `localhost:5432` (database: `tipchain`, user: `user`, password: `password`)
+- **Healthcheck & Startup Order:** The API container automatically waits for PostgreSQL's `pg_isready` health check before booting and running migrations.
 
 ---
 
